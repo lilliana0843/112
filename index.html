@@ -1,57 +1,116 @@
-<ul class="slides">
-  <input type="radio" id="control-1" name="control" checked>
-  <input type="radio" id="control-2" name="control">
-  <input type="radio" id="control-3" name="control">
-  <input type="radio" id="control-4" name="control">
-  
-  <!--  Left/Right Button  -->
-  <div class="navigator slide-1">
-    <label for="control-4">
-      <i class="fas fa-chevron-left"></i>
-    </label>
-    <label for="control-2">
-      <i class="fas fa-chevron-right"></i>
-    </label>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>圖片畫廊</title>
+  <style>
+    body {
+      background-color: transparent;
+      color: white;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 30%;
+      max-width: 200px;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+
+    /* 響應式：手機裝置下調整圖片大小 */
+    @media (max-width: 600px) {
+      .gallery img {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .gallery img {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>圖片畫廊（點擊可放大）</h2>
+
+  <div class="gallery">
+    <img src="https://images.plurk.com/6MtlK1Ul4HBoko0PJq525R.png" alt="圖1">
+    <img src="https://images.plurk.com/13a2lhkgSUzrAehBYRcBva.png" alt="圖2">
+    <img src="https://images.plurk.com/6T2bGna7T1X0nlLyaQjlzd.png" alt="圖3">
+    <img src="https://images.plurk.com/6MtlK1Ul4HBoko0PJq525R.png" alt="圖4">
+    <img src="https://images.plurk.com/13a2lhkgSUzrAehBYRcBva.png" alt="圖5">
+    <img src="https://images.plurk.com/6T2bGna7T1X0nlLyaQjlzd.png" alt="圖6">
   </div>
-  
-  <div class="navigator slide-2">
-    <label for="control-1">
-      <i class="fas fa-chevron-left"></i>
-    </label>
-    <label for="control-3">
-      <i class="fas fa-chevron-right"></i>
-    </label>
+
+  <!-- 放大預覽 -->
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="預覽圖" id="lightbox-img">
   </div>
-  
-  <div class="navigator slide-3">
-    <label for="control-2">
-      <i class="fas fa-chevron-left"></i>
-    </label>
-    <label for="control-4">
-      <i class="fas fa-chevron-right"></i>
-    </label>
-  </div>
-  
-    <div class="navigator slide-4">
-    <label for="control-3">
-      <i class="fas fa-chevron-left"></i>
-    </label>
-    <label for="control-1">
-      <i class="fas fa-chevron-right"></i>
-    </label>
-  </div>
-  <!--  /Left/Right Button  -->
-  
-  
-  <li class="slide"><img src="https://images.plurk.com/6zTYVmUN1ks5I9K70xthWW.png" alt=""/></li>
-  <li class="slide"><img src="https://images.plurk.com/2uncxAeU5FRXneP6WalDx0.png" alt=""/></li>
-  <li class="slide"><img src="https://images.plurk.com/mwuWMrQJFryjyxgqwpkkg.png" alt=""/></li>
-    <li class="slide"><img src="https://images.plurk.com/1nUm6Xl0cZRggELosyQq22.png" alt=""/></li>
-  
-  <div class="controls-visible">
-    <label for="control-1"></label>
-    <label for="control-2"></label>
-    <label for="control-3"></label>
-    <label for="control-4"></label>
-  </div>
-</ul>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const thumbnails = document.querySelectorAll(".gallery img");
+
+    thumbnails.forEach(img => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = "flex";
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+    });
+  </script>
+
+</body>
+</html>
